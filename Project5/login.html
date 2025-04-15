@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему - учет спортивных тренировок</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --primary-hover: #3a5bef;
+            --error-color: #ff4d4d;
+            --text-color: #2c3e50;
+            --light-gray: #f8f9fa;
+            --border-color: #e0e0e0;
+            --success-color: #00c853;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo p {
+            color: #64748b;
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+        }
+        
+        .auth-form {
+            margin-top: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+        
+        .auth-form input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light-gray);
+        }
+        
+        .auth-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(74, 107, 255, 0.1);
+            background: white;
+        }
+        
+        .auth-form input.error {
+            border-color: var(--error-color);
+            background-color: #fff5f5;
+        }
+        
+        .auth-form button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #6c5ce7);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
+        }
+        
+        .auth-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 107, 255, 0.4);
+        }
+        
+        .auth-form button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .links {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .links a:hover {
+            color: var(--primary-hover);
+            background: rgba(74, 107, 255, 0.1);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #94a3b8;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .divider::before {
+            margin-right: 1rem;
+        }
+        
+        .divider::after {
+            margin-left: 1rem;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .vk { background: linear-gradient(135deg, #4a76a8, #3a5a8a); }
+        .google { background: linear-gradient(135deg, #db4437, #c53929); }
+        .yandex { background: linear-gradient(135deg, #FF0000, #cc0000); }
+        
+        .footer {
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        #error-message {
+            color: var(--error-color);
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: #fff5f5;
+            border-radius: 12px;
+            display: none;
+            font-weight: 500;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>учет спортивных тренировок</h1>
+            <p>Вход в личный кабинет</p>
+        </div>
+        
+        <form class="auth-form" id="loginForm" action="login.php" method="POST" onsubmit="return handleLogin(event)">
+            <div class="form-group">
+                <input type="email" name="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" placeholder="Пароль" required>
+            </div>
+            <button type="submit" id="submitBtn">
+                <span id="submitText">Войти</span>
+                <div class="loading" id="loadingSpinner" style="display: none;"></div>
+            </button>
+        </form>
+
+        <div id="error-message"></div>
+        
+        <div class="links">
+            <a href="forgot-password.html">Забыли пароль?</a>
+            <a href="register.html">Создать новый аккаунт</a>
+        </div>
+        
+        <div class="divider">или войти через</div>
+        
+        <div class="social-login">
+            <a href="#" class="social-btn vk" title="Войти через ВКонтакте">
+                <i class="fab fa-vk"></i>
+            </a>
+            <a href="#" class="social-btn google" title="Войти через Google">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="#" class="social-btn yandex" title="Войти через Яндекс">
+                <span style="font-family: Arial, sans-serif;">Я</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 учет спортивных тренировок</p>
+            <p><a href="#" style="color: #7f8c8d;">Политика конфиденциальности</a></p>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Показываем состояние загрузки
+            submitButton.disabled = true;
+            submitText.textContent = 'Вход...';
+            loadingSpinner.style.display = 'inline-block';
+            errorMessage.style.display = 'none';
+            
+            // Собираем данные формы
+            const formData = new FormData(form);
+            
+            // Отправляем запрос
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Успешный вход
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+                } else {
+                    // Показываем ошибку
+                    errorMessage.textContent = data.message;
+                    errorMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = 'Произошла ошибка при входе. Пожалуйста, попробуйте позже.';
+                errorMessage.style.display = 'block';
+            })
+            .finally(() => {
+                // Восстанавливаем кнопку
+                submitButton.disabled = false;
+                submitText.textContent = 'Войти';
+                loadingSpinner.style.display = 'none';
+            });
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
